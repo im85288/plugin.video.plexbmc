@@ -517,6 +517,8 @@ def getServerSections ( ip_address, port, name, uuid):
         for sections in tree:
         
             path = sections.get('key')
+            html=getURL('http://%s:%s/library/sections/%s/all' % ( ip_address, port,path))
+            tree = etree.fromstring(html)
             if not path[0] == "/":
                 path='/library/sections/%s' % path
 
@@ -531,6 +533,7 @@ def getServerSections ( ip_address, port, name, uuid):
                     'art'        : sections.get('art','') ,
                     'local'      : '1' ,
                     'type'       : sections.get('type','Unknown'),
+                    'total'      : tree.get('size'),
                     'owned'      : '1' })
                 
             
@@ -3518,6 +3521,7 @@ def skin( server_list=None, type=None ):
         WINDOW.setProperty("plexbmc.%d.path"     % (sectionCount) , "ActivateWindow("+window+",plugin://plugin.video.plexbmc/?url="+s_url+",return)")
         WINDOW.setProperty("plexbmc.%d.art"      % (sectionCount) , extraData['fanart_image']+qToken)
         WINDOW.setProperty("plexbmc.%d.type"     % (sectionCount) , section['type'])
+        WINDOW.setProperty("plexbmc.%d.total"     % (sectionCount) , section['total'])
         WINDOW.setProperty("plexbmc.%d.icon"     % (sectionCount) , extraData['thumb']+qToken)
         WINDOW.setProperty("plexbmc.%d.thumb"    % (sectionCount) , extraData['thumb']+qToken)
         WINDOW.setProperty("plexbmc.%d.partialpath" % (sectionCount) , "ActivateWindow("+window+",plugin://plugin.video.plexbmc/?url=http://"+section['address']+section['path'])
