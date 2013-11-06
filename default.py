@@ -220,7 +220,7 @@ g_skipmetadata= __settings__.getSetting("skipmetadata")
 g_skipmediaflags= __settings__.getSetting("skipflags")
 g_skipimages= __settings__.getSetting("skipimages")
 
-g_loc = "special://home/addons/plugin.video.plexbmc"
+g_loc = "special://home/addons/plugin.video.plexbmc-section-endpoints"
 
 #Create the standard header structure and load with a User Agent to ensure we get back a response.
 g_txheaders = {
