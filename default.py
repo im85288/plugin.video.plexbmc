@@ -220,7 +220,7 @@ g_skipmetadata = __settings__.getSetting("skipmetadata")
 g_skipmediaflags = __settings__.getSetting("skipflags")
 g_skipimages = __settings__.getSetting("skipimages")
 
-g_loc = "special://home/addons/plugin.video.plexbmc-section-endpoints"
+g_loc = "special://home/addons/plugin.video.plexbmc"
 
 # Create the standard header structure and load with a User Agent to ensure we get back a response.
 g_txheaders = {
@@ -1352,7 +1352,7 @@ def enforceSkinView(mode):
                "1" : QuartzV3_views,
                "2" : Confluence_views,
                "3" : Amber_views,
-               "4" : Xperience1080plusplus_views }
+               "4" : Xperience1080_views }
 
     printDebug("Using skin view: %s" % skin_list[skinname][viewname])
 
