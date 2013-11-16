@@ -53,7 +53,7 @@ BASE_RESOURCE_PATH = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib'
 PLUGINPATH = xbmc.translatePath(os.path.join(__cwd__))
 CACHEDATA = PLUGINPATH + "/cache"
 sys.path.append(BASE_RESOURCE_PATH)
-PLEXBMC_VERSION = "3.3.0"
+PLEXBMC_VERSION = "3.3.1"
 
 print "===== PLEXBMC START ====="
 
@@ -1783,6 +1783,7 @@ def getAudioSubtitlesMedia(server, tree, full=False):
                 full_data['aired'] = timings.get('originallyAvailableAt', '') 
                 full_data['tvshowtitle'] = timings.get('grandparentTitle', tree.get('grandparentTitle', '')).encode('utf-8') 
                 full_data['season'] = int(timings.get('parentIndex', tree.get('parentIndex', 0))) 
+                full_data['thumbnailImage'] = getParentThumb(timings, server)
 
         elif media_type == "music":
                         
@@ -3219,6 +3220,34 @@ def getThumb(data, server, transcode=True, width=512, height=512):
         return ''
         
     thumbnail = data.get('thumb', '').split('?t')[0].encode('utf-8')
+
+
+    if thumbnail == '':
+        return g_loc + '/resources/plex.png'
+
+    elif thumbnail[0:4] == "http" :
+        return thumbnail
+
+    elif thumbnail[0] == '/':
+        if transcode:
+            return photoTranscode(server, 'http://localhost:32400' + thumbnail, width, height)
+        else:
+            return 'http://' + server + thumbnail
+
+    else:
+        return g_loc + '/resources/plex.png'
+    
+def getParentThumb(data, server, transcode=True, width=512, height=512):
+    '''
+        Simply take a URL or path and determine how to format for images
+        @ input: elementTree element, server name
+        @ return formatted URL
+    '''
+    
+    if g_skipimages == "true":
+        return ''
+        
+    thumbnail = data.get('parentThumb', '').split('?t')[0].encode('utf-8')
 
 
     if thumbnail == '':
